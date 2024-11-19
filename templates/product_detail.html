@@ -1,0 +1,36 @@
+
+
+{% extends 'base.html' %}
+
+ {% block title %}{{ product.name }} Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename=product['image_url'].replace('static/', '')) }}" alt="Product Image" class="img-fluid" style="max-width: 100%; height: auto;">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+            <p class="font-weight-bold">Price: ${{ product.price }}</p>
+            <p class="text-success">In stock: {{ product.stock_quantity }}</p>
+
+            <!-- Quantity Selector -->
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <select id="quantity" name="quantity" class="form-control">
+                    {% for i in range(1, 11) %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Add to Cart Button -->
+            <form action="{{ url_for('add_product', product_id=product.product_id) }}" method="POST">
+                <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

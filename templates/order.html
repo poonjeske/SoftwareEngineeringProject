@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Order{% endblock %}
+
+{% block content %}
+    <!-- Search Bar below the Navbar with Curve -->
+    <div class="search-container">
+        <input type="text" placeholder="Search...">
+        <button type="submit">Search</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid">
+        <!-- Loop through each product from the database -->
+        {% for product in products %}
+        <div class="product-card" onclick="window.location.href='{{ url_for('get_product_details', product_id=product.product_id) }}'" data-name="{{ product.name }}" data-price="{{ product.price }}">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p>Price: ${{ product.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

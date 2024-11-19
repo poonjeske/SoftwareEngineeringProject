@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <!-- Leftmost button changes based on login status -->
+        <a href="{{ url_for('index') }}" class="logo">
+            {% if 'user_id' in session %}
+                MyWebsite (logged in)
+            {% else %}
+                MyWebsite (Guest)
+            {% endif %}
+        </a>
+        <div class="navbar-links">
+            {% if 'user_id' in session %}
+                <!-- Links for logged-in users -->
+                <a href="{{ url_for('order') }}">Order</a>
+                <a href="{{ url_for('support') }}">Support</a>
+                <div class="profile-dropdown">
+                    <img src="{{ url_for('static', filename='profile-icon.png') }}" alt="Profile Icon">
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('user_profile') }}">Profile</a>
+                        <a href="{{ url_for('cart') }}">My Cart</a>
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </div>
+            {% else %}
+                <!-- Links for users not logged in -->
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Signup</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alerts">
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+-->
